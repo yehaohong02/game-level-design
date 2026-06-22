@@ -2846,27 +2846,65 @@ BGM-XX | 背景音乐名称
 #### 立绘/模型
 | UE5资产名 | 类别 | 资产说明 | AI图像提示词（180-250字） |
 |-----------|------|----------|--------------------------|
+
 #### 动作清单
+> **⚠️ 主角动作必须覆盖以下6个类别，每个类别至少1个动作，禁止笼统一行"待机/攻击"。按类别逐个展开。**
+
 | UE5动作名 | 动作类别 | 动作说明 | AI图像提示词（动作关键帧） |
 |-----------|----------|----------|----------------------------|
+| AM_Char_Idle | 基础移动 | 待机/站立/行走/跑步/蹲伏/跳跃 | |
+| AM_Char_Attack | 战斗 | 普攻连段/重击/格挡/闪避 | |
+| AM_Char_HitDeath | 受击/死亡 | 受击反应/倒地/死亡动画/复活 | |
+| AM_Char_Interact | 交互 | 拾取道具/开门/攀爬/对话触发 | |
+| AM_Char_Skill | 技能 | 法术/特殊能力/大招/道具使用 | |
+| AM_Char_Emote | 情感 | 喜悦/悲伤/恐惧/愤怒/惊讶表情+肢体 | |
 
 ### 2.2 敌人：[敌人名]
 #### 模型
 | UE5资产名 | 类别 | 资产说明 | AI图像提示词（180-250字） |
 |-----------|------|----------|--------------------------|
+
 #### 动作清单
+> **⚠️ 敌人动作必须覆盖以下5个类别，每个类别至少1个动作。Boss额外增加Boss专属类别。**
+
 | UE5动作名 | 动作类别 | 动作说明 | AI图像提示词（动作关键帧） |
 |-----------|----------|----------|----------------------------|
+| AM_Enemy_Move | 移动 | 巡逻/追踪/突进/后撤 | |
+| AM_Enemy_Attack | 攻击 | 近战/远程/范围/AOE | |
+| AM_Enemy_State | 状态 | 警觉/狂暴/虚弱/变身 | |
+| AM_Enemy_HitDeath | 受击/死亡 | 受击硬直/击飞/死亡消散 | |
+| AM_Boss_Phase | Boss专属 | 阶段转换/登场演出/必杀技/处决 | |
 
 ### 2.3 NPC：[NPC名]
 #### 模型
 | UE5资产名 | 类别 | 资产说明 | AI图像提示词（180-250字） |
 |-----------|------|----------|--------------------------|
+
 #### 动作清单
+> **⚠️ NPC动作必须覆盖以下3个类别，每个类别至少1个动作。**
+
 | UE5动作名 | 动作类别 | 动作说明 | AI图像提示词（动作关键帧） |
 |-----------|----------|----------|----------------------------|
+| AM_NPC_Daily | 日常 | 站立/行走/坐下/休息/工作/巡逻 | |
+| AM_NPC_Dialogue | 对话 | 说话/倾听/点头/摇头/指向/递物品 | |
+| AM_NPC_Emote | 情感 | 微笑/悲伤/恐惧/愤怒/惊讶/哭泣 | |
 
 ## 三、道具/物品资产
+> **⚠️ 道具必须按类别分组，每个类别有独立表格。**
+
+### 3.1 关键剧情道具
+| UE5资产名 | 类别 | 资产说明 | AI图像提示词（180-250字） |
+|-----------|------|----------|--------------------------|
+
+### 3.2 可使用道具
+| UE5资产名 | 类别 | 资产说明 | AI图像提示词（180-250字） |
+|-----------|------|----------|--------------------------|
+
+### 3.3 收集品
+| UE5资产名 | 类别 | 资产说明 | AI图像提示词（180-250字） |
+|-----------|------|----------|--------------------------|
+
+### 3.4 环境道具
 | UE5资产名 | 类别 | 资产说明 | AI图像提示词（180-250字） |
 |-----------|------|----------|--------------------------|
 
@@ -3002,6 +3040,296 @@ BGM-XX | 背景音乐名称
 
 > **⚠️ 防坑检查点**
 > - [ ] 物料清单.md先完成（含全部提示词），再从MD生成.html（违反=返工）
+
+### 物料清单HTML页面模板
+
+> **⚠️ 物料清单HTML必须包含以下全部模块，不可省略资产清单、主角动作清单、NPC动作清单。深色主题，与章节HTML统一风格。**
+
+**页面结构**：
+```
+├─ 左侧导航栏（锚点跳转到各分类）
+├─ 顶部仪表盘（资产总数、分类统计、提示词完成率）
+├─ 一、场景/地图资产（卡片式，每张含缩略图占位+提示词折叠）
+├─ 二、角色资产（按角色分组，每个角色含：）
+│   ├── 模型卡片（提示词+UE5命名）
+│   └── 动作清单表格（6类：基础移动/战斗/受击死亡/交互/技能/情感）
+├─ 三、敌人/Boss资产
+│   ├── 模型卡片
+│   └── 动作清单表格（5类：移动/攻击/状态/受击死亡/Boss专属）
+├─ 四、NPC资产
+│   ├── 模型卡片
+│   └── 动作清单表格（3类：日常/对话/情感）
+├─ 五、道具资产（4类：关键剧情/可使用/收集品/环境道具）
+├─ 六、特效资产
+├─ 七、UI界面资产（10个子系统分类）
+├─ 八、音频资产（音效+BGM）
+└─ 底部：TXT文件下载链接
+```
+
+**HTML模板结构**：
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[游戏名] 物料清单</title>
+<style>
+  :root { --bg:#0d1117; --card:#161b22; --card-border:#30363d; --text:#e6edf3;
+    --accent:#58a6ff; --accent2:#7ee787; --accent3:#d2a8ff; --accent4:#f0883e;
+    --red:#f85149; --yellow:#d29922; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Microsoft YaHei',sans-serif; }
+  .sidebar { position:fixed; left:0; top:0; width:240px; height:100vh; background:var(--card);
+    border-right:1px solid var(--card-border); padding:16px; overflow-y:auto; z-index:100; }
+  .sidebar h3 { color:var(--accent); margin-bottom:12px; font-size:14px; }
+  .sidebar a { display:block; color:var(--text); text-decoration:none; padding:6px 8px;
+    border-radius:4px; font-size:13px; transition:background 0.2s; }
+  .sidebar a:hover { background:var(--card-border); }
+  .main { margin-left:240px; padding:24px 32px; }
+  .dashboard { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+  .stat-card { background:var(--card); border:1px solid var(--card-border); border-radius:8px;
+    padding:16px; text-align:center; }
+  .stat-num { font-size:32px; font-weight:bold; color:var(--accent); }
+  .stat-label { font-size:13px; color:#8b949e; margin-top:4px; }
+  .section { background:var(--card); border:1px solid var(--card-border); border-radius:12px;
+    padding:24px; margin-bottom:24px; }
+  .section h2 { color:var(--accent); font-size:18px; margin-bottom:16px;
+    border-bottom:1px solid var(--card-border); padding-bottom:8px; }
+  .section h3 { color:var(--accent2); font-size:15px; margin:16px 0 8px; }
+  table { width:100%; border-collapse:collapse; margin:8px 0; }
+  th { background:var(--bg); color:var(--accent); padding:10px 12px; text-align:left;
+    font-size:13px; border-bottom:2px solid var(--card-border); }
+  td { padding:10px 12px; border-bottom:1px solid var(--card-border); font-size:13px;
+    vertical-align:top; }
+  .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px;
+    margin-right:4px; }
+  .tag-movement { background:#1f6feb33; color:#58a6ff; }
+  .tag-combat { background:#da363333; color:#f85149; }
+  .tag-hit { background:#d2992233; color:#d29922; }
+  .tag-interact { background:#23863633; color:#7ee787; }
+  .tag-skill { background:#8957e533; color:#d2a8ff; }
+  .tag-emote { background:#f0883e33; color:#f0883e; }
+  .tag-daily { background:#23863633; color:#7ee787; }
+  .tag-dialogue { background:#1f6feb33; color:#58a6ff; }
+  .prompt-box { background:var(--bg); border:1px solid var(--card-border); border-radius:6px;
+    padding:12px; font-size:12px; line-height:1.6; max-height:120px; overflow-y:auto;
+    cursor:pointer; transition:max-height 0.3s; }
+  .prompt-box.expanded { max-height:none; }
+  .prompt-box::after { content:'点击展开/收起'; display:block; text-align:right;
+    color:#8b949e; font-size:11px; margin-top:4px; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+  .asset-card { background:var(--bg); border:1px solid var(--card-border); border-radius:8px;
+    padding:16px; }
+  .asset-card h4 { color:var(--accent2); margin-bottom:8px; }
+  .ue-name { font-family:monospace; color:var(--accent3); font-size:12px; }
+  @media(max-width:900px) { .sidebar{display:none;} .main{margin-left:0;} }
+</style>
+</head>
+<body>
+<!-- 左侧导航 -->
+<div class="sidebar">
+  <h3>物料清单导航</h3>
+  <a href="#dashboard">仪表盘</a>
+  <a href="#scenes">场景/地图</a>
+  <a href="#characters">主角资产</a>
+  <a href="#enemies">敌人/Boss</a>
+  <a href="#npcs">NPC资产</a>
+  <a href="#props">道具资产</a>
+  <a href="#vfx">特效资产</a>
+  <a href="#ui">UI界面</a>
+  <a href="#audio">音频资产</a>
+</div>
+
+<!-- 主内容区 -->
+<div class="main">
+  <!-- 仪表盘 -->
+  <div class="dashboard" id="dashboard">
+    <div class="stat-card"><div class="stat-num">[N]</div><div class="stat-label">资产总数</div></div>
+    <div class="stat-card"><div class="stat-num">[N]</div><div class="stat-label">提示词完成</div></div>
+    <div class="stat-card"><div class="stat-num">[N]</div><div class="stat-label">角色动作总数</div></div>
+    <div class="stat-card"><div class="stat-num">[N]</div><div class="stat-label">TXT文件数</div></div>
+  </div>
+
+  <!-- 一、场景资产 -->
+  <div class="section" id="scenes">
+    <h2>一、场景/地图资产</h2>
+    <table>
+      <tr><th>UE5资产名</th><th>章节</th><th>资产说明</th><th>AI图像提示词</th></tr>
+      <tr>
+        <td class="ue-name">MAP_Ch01_DarkForest</td>
+        <td>Ch01</td>
+        <td>[场景说明]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[180-250字提示词]</div></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 二、主角资产（含动作清单） -->
+  <div class="section" id="characters">
+    <h2>二、主角资产</h2>
+    <h3>2.1 立绘/模型</h3>
+    <div class="card-grid">
+      <div class="asset-card">
+        <h4>[角色名]</h4>
+        <div class="ue-name">BP_Char_[Name]</div>
+        <div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div>
+      </div>
+    </div>
+    <h3>2.2 主角动作清单</h3>
+    <table>
+      <tr><th>UE5动作名</th><th>动作类别</th><th>动作说明</th><th>AI图像提示词</th></tr>
+      <tr>
+        <td class="ue-name">AM_Char_Idle</td>
+        <td><span class="tag tag-movement">基础移动</span></td>
+        <td>[待机/站立/行走/跑步]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Char_LightAtk_01</td>
+        <td><span class="tag tag-combat">战斗</span></td>
+        <td>[轻攻击/重击/格挡/闪避]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Char_Hit_Front</td>
+        <td><span class="tag tag-hit">受击/死亡</span></td>
+        <td>[受击反应/倒地/死亡]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Char_Pickup</td>
+        <td><span class="tag tag-interact">交互</span></td>
+        <td>[拾取/开门/攀爬]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Char_Skill_Fireball</td>
+        <td><span class="tag tag-skill">技能</span></td>
+        <td>[法术/特殊能力/大招]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Char_Emote_Fear</td>
+        <td><span class="tag tag-emote">情感</span></td>
+        <td>[恐惧/喜悦/悲伤/愤怒]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 三、敌人/Boss资产（含动作清单） -->
+  <div class="section" id="enemies">
+    <h2>三、敌人/Boss资产</h2>
+    <h3>3.1 模型</h3>
+    <div class="card-grid">
+      <div class="asset-card">
+        <h4>[敌人名]</h4>
+        <div class="ue-name">BP_Enemy_[Name]</div>
+        <div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div>
+      </div>
+    </div>
+    <h3>3.2 敌人/Boss动作清单</h3>
+    <table>
+      <tr><th>UE5动作名</th><th>动作类别</th><th>动作说明</th><th>AI图像提示词</th></tr>
+      <tr>
+        <td class="ue-name">AM_Enemy_Patrol</td>
+        <td><span class="tag tag-movement">移动</span></td>
+        <td>[巡逻/追踪/突进]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Enemy_Melee_01</td>
+        <td><span class="tag tag-combat">攻击</span></td>
+        <td>[近战/远程/AOE]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Enemy_Alert</td>
+        <td><span class="tag tag-hit">状态</span></td>
+        <td>[警觉/狂暴/虚弱]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Enemy_Death</td>
+        <td><span class="tag tag-interact">受击/死亡</span></td>
+        <td>[受击硬直/死亡消散]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_Boss_PhaseChange</td>
+        <td><span class="tag tag-skill">Boss专属</span></td>
+        <td>[阶段转换/登场演出/必杀技]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 四、NPC资产（含动作清单） -->
+  <div class="section" id="npcs">
+    <h2>四、NPC资产</h2>
+    <h3>4.1 模型</h3>
+    <div class="card-grid">
+      <div class="asset-card">
+        <h4>[NPC名]</h4>
+        <div class="ue-name">BP_NPC_[Name]</div>
+        <div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div>
+      </div>
+    </div>
+    <h3>4.2 NPC动作清单</h3>
+    <table>
+      <tr><th>UE5动作名</th><th>动作类别</th><th>动作说明</th><th>AI图像提示词</th></tr>
+      <tr>
+        <td class="ue-name">AM_NPC_Stand</td>
+        <td><span class="tag tag-daily">日常</span></td>
+        <td>[站立/行走/坐下/劳动]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_NPC_Talk</td>
+        <td><span class="tag tag-dialogue">对话</span></td>
+        <td>[说话/倾听/点头/手势]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+      <tr>
+        <td class="ue-name">AM_NPC_Happy</td>
+        <td><span class="tag tag-emote">情感</span></td>
+        <td>[高兴/悲伤/愤怒/恐惧]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 五、道具资产 -->
+  <div class="section" id="props">
+    <h2>五、道具资产</h2>
+    <h3>5.1 关键剧情道具</h3>
+    <table>
+      <tr><th>UE5资产名</th><th>资产说明</th><th>AI图像提示词</th></tr>
+      <tr><td class="ue-name">BP_Prop_[Name]</td><td>[说明]</td>
+        <td><div class="prompt-box" onclick="this.classList.toggle('expanded')">[提示词]</div></td></tr>
+    </table>
+    <h3>5.2 可使用道具</h3>
+    <table><!-- 同上格式 --></table>
+    <h3>5.3 收集品</h3>
+    <table><!-- 同上格式 --></table>
+    <h3>5.4 环境道具</h3>
+    <table><!-- 同上格式 --></table>
+  </div>
+
+  <!-- 六~八：特效/UI/音频同理 -->
+  <!-- ... -->
+</div>
+
+<script>
+document.querySelectorAll('.prompt-box').forEach(el => {
+  el.addEventListener('click', () => el.classList.toggle('expanded'));
+});
+</script>
+</body>
+</html>
+```
 > - [ ] 每个资产都有UE5命名（符合前缀规范）
 > - [ ] 每个视觉资产都有AI图像提示词（180-250字中文，4要素齐全）
 > - [ ] 提示词之间有差异化，没有套模板
